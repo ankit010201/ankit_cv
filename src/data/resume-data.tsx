@@ -26,7 +26,7 @@ export const RESUME_DATA = {
   locationLink: "https://maps.app.goo.gl/bG7jB43rwDJgC1rf9",
   about: "Engineer focused on building products with extra attention to detail",
   summary:
-    "As a Full Stack Engineer with skills in Machine Learning as well, I have successfully taken multiple products from 0 to 1. I lead teams effectively, ensuring an environment where people can do their best work. Currently, I am a founder at a startup that is trying to redefine how tech is used by educators and students. I have experience working both at a large scale as a software engineer as well as at a startup scale as technical founder.",
+    "As a Full Stack Engineer with skills in Machine Learning as well, I have successfully taken multiple products from 0 to 1. I lead teams effectively, ensuring an environment where people can do their best work. Currently, I am a founder at a startup that is trying to redefine how tech is used by educators and students. I have experience working both at a large scale as a software engineer as well as at a startup as a technical founder.",
   avatarUrl: "https://avatars.githubusercontent.com/ankit010201",
   personalWebsiteUrl: "https://ankit010201.substack.com/",
   contact: {
@@ -67,7 +67,7 @@ export const RESUME_DATA = {
       start: "2021",
       end: "2023",
       description:
-        "Implemented new features, led squad, worked on improving the way developers ship the code, started migration from Emotion to Tailwind CSS and more. Technologies: React, TypeScript, GraphQL",
+        "As part of the SPARTANS engineering team, I worked on high-impact projects in the Substrate organization. These projects included pipeline validations and building new personalized features for Outlook. In addition, during my time on the Capsense Engineering team, I worked closely with data scientists to build new pipelines and features that helped improve the accuracy and availability of the forecasting predictions. Technologies: Python, C#, TypeScript, React, Machine Learning, Azure",
     },
     {
       company: "Amazon",
@@ -77,7 +77,7 @@ export const RESUME_DATA = {
       start: "Summer",
       end: "2020",
       description:
-        "Implemented new features, led squad, worked on improving the way developers ship the code, started migration from Emotion to Tailwind CSS and more. Technologies: React, TypeScript, GraphQL",
+        "Utilized A/B experiments as part of the Alexa HHO Growth team to improve the retention of features for Amazon Alexa. Improved the data ingestion workflow by reducing the number of steps and making it more intuitive. Technologies: Java, Python, Machine Learning",
     },
   ],
   skills: [
