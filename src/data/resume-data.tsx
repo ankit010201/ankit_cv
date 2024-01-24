@@ -82,6 +82,10 @@ export const RESUME_DATA = {
   ],
   skills: [
     "Python",
+    "C#",
+    "Java",
+    "C",
+    "C++",
     "Tensorflow",
     "React/Next.js",
     "JavaScript",
@@ -99,6 +103,16 @@ export const RESUME_DATA = {
       link: {
         label: "strava-visualized.vercel.app",
         href: "https://strava-visualized.vercel.app/",
+      },
+    },
+    {
+      title: "Substack Blog",
+      techStack: ["Blog"],
+      description:
+        "A blog that covers a bunch of different topics that I'm currently interested in/working on",
+      link: {
+        label: "ankit010201.substack.com",
+        href: "https://ankit010201.substack.com/",
       },
     },
   ],
