@@ -96,15 +96,15 @@ export const RESUME_DATA = {
         href: "https://ankit010201.substack.com/",
       },
     },
-    {
-      title: "Improved Search Engine",
-      techStack: ["Side Project", "Javascript", "Next js", "Python"],
-      description:
-        "A search engine that reranks and groups the results for the user",
-      link: {
-        label: "improved-search-engine.vercel.app",
-        href: "https://improved-search-engine.vercel.app/",
-      },
-    },
+    // {
+    //   title: "Improved Search Engine",
+    //   techStack: ["Side Project", "Javascript", "Next js", "Python"],
+    //   description:
+    //     "A search engine that reranks and groups the results for the user",
+    //   link: {
+    //     label: "improved-search-engine.vercel.app",
+    //     href: "https://improved-search-engine.vercel.app/",
+    //   },
+    // },
   ],
 } as const;
