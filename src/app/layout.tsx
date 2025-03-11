@@ -1,14 +1,12 @@
-import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/react";
 import { Inter } from "next/font/google";
 
 import "./globals.css";
 import React from "react";
 
-export const metadata: Metadata = {
-  title: "Ankit CV",
-  description: "CV created using Next.js",
-};
+import { metadata } from "@/app/metadata";
+
+export { metadata };
 
 // If loading a variable font, you don't need to specify the font weight
 const inter = Inter({
