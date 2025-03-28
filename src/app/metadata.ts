@@ -1,10 +1,10 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Ankit CV",
+  title: "Ankit Agrawal",
   description: "CV + Blog",
   openGraph: {
-    title: "Ankit CV",
+    title: "Ankit Agrawal",
     description: "CV + Blog",
     images: [
       {
