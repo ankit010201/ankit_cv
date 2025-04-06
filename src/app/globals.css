@@ -37,6 +37,10 @@
     --retro-bg: #008080;
     --retro-window-bg: #c0c0c0;
     --retro-border: #ffffff #808080 #808080 #ffffff;
+
+    --foreground-rgb: 0, 0, 0;
+    --background-start-rgb: 214, 219, 220;
+    --background-end-rgb: 255, 255, 255;
   }
 
   .dark {
@@ -67,6 +71,10 @@
     --border: 215 27.9% 16.9%;
     --input: 215 27.9% 16.9%;
     --ring: 216 12.2% 83.9%;
+
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
   }
 }
 
@@ -78,7 +86,16 @@
     @apply bg-background text-foreground;
     font-family: "MS Sans Serif", "Segoe UI", sans-serif;
     background-color: var(--retro-bg);
-    color: #000000;
+    color: rgb(var(--foreground-rgb));
+    background: linear-gradient(
+        to bottom,
+        transparent,
+        rgb(var(--background-end-rgb))
+      )
+      rgb(var(--background-start-rgb));
+    image-rendering: pixelated;
+    -webkit-font-smoothing: none;
+    -moz-osx-font-smoothing: none;
   }
 }
 
@@ -135,4 +152,64 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+/* Pixelated UI styles */
+.pixelated {
+  image-rendering: pixelated;
+  -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: none;
+}
+
+.pixelated-border {
+  border-style: solid;
+  border-width: 2px;
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.2);
+}
+
+.pixelated-button {
+  border-style: solid;
+  border-width: 2px;
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.2);
+  transition:
+    transform 0.1s,
+    box-shadow 0.1s;
+}
+
+.pixelated-button:active {
+  transform: translate(2px, 2px);
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0.2);
+}
+
+.pixelated-input {
+  border-style: solid;
+  border-width: 2px;
+  box-shadow: inset 2px 2px 0 rgba(0, 0, 0, 0.1);
+}
+
+.pixelated-window {
+  border-style: solid;
+  border-width: 2px;
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.2);
+}
+
+/* Retro font */
+@font-face {
+  font-family: "PressStart2P";
+  src: url("/fonts/PressStart2P-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.retro-font {
+  font-family: "PressStart2P", monospace;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  letter-spacing: 0.05em;
+}
+
+/* Pixelated grid background */
+.pixelated-grid {
+  background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='0.1'%3E%3Cpath d='M0 0h1v1H0V0zm10 10h1v1h-1v-1zM20 0h1v1h-1V0zm0 10h1v1h-1v-1zM10 0h1v1h-1V0zM0 10h1v1H0v-1z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  background-size: 20px 20px;
 }

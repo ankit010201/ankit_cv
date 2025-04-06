@@ -1,46 +1,29 @@
 "use client";
 
 import DesktopIcon from "./desktop-icon";
-import { sections } from "@/lib/data";
+import { sections } from "../data/sections";
 
 interface DesktopProps {
-  onIconClick: (sectionId: string) => void;
-  changeBackground: (newBackground: string) => void;
+  onIconClick: (id: string) => void;
+  changeBackground: (background: string) => void;
 }
 
 export default function Desktop({
   onIconClick,
   changeBackground,
 }: DesktopProps) {
-  const handleSettingsClick = () => {
-    const newBackground = prompt(
-      "Enter URL for background image:",
-      "/background.jpg",
-    );
-    if (newBackground) {
-      changeBackground(newBackground);
-    }
-  };
-
   return (
-    <div className="flex-1 p-4">
-      <div className="flex w-24 flex-col items-start space-y-6">
-        {Object.entries(sections).map(([id, section]) => (
+    <div className="pixelated-grid relative h-full w-full">
+      <div className="flex flex-col space-y-4 p-4">
+        {sections.map((section) => (
           <DesktopIcon
-            key={id}
-            id={id}
+            key={section.id}
+            id={section.id}
+            title={section.title}
             icon={section.icon}
-            label={section.title}
-            onClick={() => onIconClick(id)}
+            onClick={() => onIconClick(section.id)}
           />
         ))}
-
-        <DesktopIcon
-          id="settings"
-          icon="settings"
-          label="Settings"
-          onClick={handleSettingsClick}
-        />
       </div>
     </div>
   );

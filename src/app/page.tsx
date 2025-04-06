@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Desktop from "@/components/desktop";
 import TopBar from "@/components/top-bar";
 import Window from "@/components/window";
+import LoginScreen from "@/components/login-screen";
 import { sections } from "@/lib/data";
 
 export default function Home() {
@@ -11,6 +12,7 @@ export default function Home() {
   const [activeWindow, setActiveWindow] = useState<string | null>(null);
   const [customBackground, setCustomBackground] =
     useState<string>("/background.jpg");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     const updateDate = () => {
@@ -57,6 +59,10 @@ export default function Home() {
     setCustomBackground(newBackground);
   };
 
+  const handleLogin = () => {
+    setIsLoggedIn(true);
+  };
+
   return (
     <main
       className="relative h-screen w-full overflow-hidden font-mono text-gray-800"
@@ -66,24 +72,35 @@ export default function Home() {
         backgroundPosition: "center",
       }}
     >
-      <div className="absolute inset-0 bg-amber-50/80"></div>
+      {!isLoggedIn ? (
+        <LoginScreen onLogin={handleLogin} />
+      ) : (
+        <>
+          <div className="absolute inset-0 bg-gradient-to-br from-amber-100/90 to-amber-50/80"></div>
+          <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10"></div>
 
-      <div className="relative z-10 flex h-full flex-col">
-        <TopBar osName="PersonalOS" currentDate={currentDate} />
+          <div className="relative z-10 flex h-full flex-col">
+            <TopBar osName="PersonalOS" currentDate={currentDate} />
 
-        <Desktop
-          onIconClick={handleIconClick}
-          changeBackground={changeBackground}
-        />
+            <Desktop
+              onIconClick={handleIconClick}
+              changeBackground={changeBackground}
+            />
 
-        {activeWindow && (
-          <Window
-            title={sections[activeWindow]?.title || ""}
-            content={sections[activeWindow]?.content || ""}
-            onClose={closeWindow}
-          />
-        )}
-      </div>
+            {activeWindow && (
+              <Window
+                id={activeWindow}
+                title={sections[activeWindow]?.title || ""}
+                isActive={true}
+                onClose={closeWindow}
+                onFocus={() => setActiveWindow(activeWindow)}
+              >
+                {sections[activeWindow]?.content || ""}
+              </Window>
+            )}
+          </div>
+        </>
+      )}
     </main>
   );
 }
