@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { getRecentlyPlayed } from "@/lib/spotify";
 
+export const dynamic = "force-dynamic";
+
 export async function GET() {
   const res = await getRecentlyPlayed();
   if (!res.ok) return NextResponse.json({ tracks: [] });

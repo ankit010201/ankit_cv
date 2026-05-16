@@ -35,7 +35,11 @@ export async function getNowPlaying() {
 }
 
 export async function getRecentlyPlayed() {
-  return spotifyFetch("/me/player/recently-played?limit=5", 60);
+  const token = await getAccessToken();
+  return fetch("https://api.spotify.com/v1/me/player/recently-played?limit=5", {
+    headers: { Authorization: `Bearer ${token}` },
+    cache: "no-store",
+  });
 }
 
 export async function getTopArtists() {
