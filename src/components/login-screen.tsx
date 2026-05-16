@@ -37,7 +37,7 @@ export default function LoginScreen({ onLogin }: LoginScreenProps) {
   useEffect(() => {
     if (showPassword) {
       setIsTyping(true);
-      const correctPassword = "helloworld";
+      const correctPassword = "42istheanswer";
       let currentIndex = 0;
 
       const typingInterval = setInterval(() => {
@@ -74,8 +74,9 @@ export default function LoginScreen({ onLogin }: LoginScreenProps) {
   }, []);
 
   return (
-    <div className="pixelated-grid fixed inset-0 flex items-center justify-center">
-      <div className="pixelated-window w-80 bg-amber-50 p-6">
+    <div className="pixelated-grid fixed inset-0 flex items-center justify-center bg-gradient-to-br from-amber-100/90 to-amber-50/80">
+      <div className="crt-overlay pointer-events-none fixed inset-0 z-10" />
+      <div className="pixelated-window relative z-20 w-80 bg-amber-50 p-6">
         <div className="flex flex-col items-center">
           <div
             className={`pixelated-border mb-6 overflow-hidden bg-gray-200 p-1 transition-all duration-500 ${
@@ -86,9 +87,9 @@ export default function LoginScreen({ onLogin }: LoginScreenProps) {
               <Image
                 src="https://avatars.githubusercontent.com/ankit010201"
                 alt="Profile"
-                className="pixelated h-full w-full object-cover"
-                width={80}
-                height={80}
+                className="dithered h-full w-full object-cover"
+                width={32}
+                height={32}
               />
             </div>
           </div>

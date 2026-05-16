@@ -26,7 +26,7 @@ export const sections: Record<
           </div>
           <div>
             <div className="font-bold">1.82ha</div>
-            <div className="text-xs text-gray-700">Coffee consumed</div>
+            <div className="text-xs text-gray-700">Water consumed</div>
           </div>
           <div>
             <div className="font-bold">53.3t</div>
