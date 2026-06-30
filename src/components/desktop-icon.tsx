@@ -81,6 +81,17 @@ function getRetroIcon(icon: string) {
           </div>
         </PixelIcon>
       );
+    case "video":
+      return (
+        <PixelIcon>
+          <div className="pixelated-border h-9 w-9 bg-rose-600 flex items-center justify-center">
+            <div className="pixelated-border relative h-6 w-7 bg-amber-100">
+              <div className="absolute left-2.5 top-1.5 h-3 w-3 bg-rose-600 [clip-path:polygon(0_0,100%_50%,0_100%)]"></div>
+            </div>
+            <div className="ml-0.5 h-4 w-1.5 bg-rose-200"></div>
+          </div>
+        </PixelIcon>
+      );
     case "fork":
       return (
         <PixelIcon>

@@ -11,6 +11,8 @@ interface WindowProps {
   title: string;
   x: number;
   y: number;
+  width?: number;
+  height?: number;
   zIndex: number;
   minimized: boolean;
   isMobile?: boolean;
@@ -25,6 +27,8 @@ export default function Window({
   title,
   x,
   y,
+  width = 600,
+  height = 400,
   zIndex,
   minimized,
   isMobile = false,
@@ -109,7 +113,7 @@ export default function Window({
   return (
     <div
       className="pixelated-window absolute bg-amber-50"
-      style={{ left: x, top: y, width: 600, height: 400, zIndex, display: minimized ? "none" : undefined }}
+      style={{ left: x, top: y, width, height, zIndex, display: minimized ? "none" : undefined }}
       onMouseDown={onFocus}
     >
       <div

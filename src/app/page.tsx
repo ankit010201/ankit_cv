@@ -20,6 +20,7 @@ import NowWindow from "@/components/windows/NowWindow";
 import MusicWindow from "@/components/windows/MusicWindow";
 import BookshelfWindow from "@/components/windows/BookshelfWindow";
 import WatchlistWindow from "@/components/windows/WatchlistWindow";
+import VideosWindow from "@/components/windows/VideosWindow";
 import FoodWindow from "@/components/windows/FoodWindow";
 import CameraWindow from "@/components/windows/CameraWindow";
 import RunningWindow from "@/components/windows/RunningWindow";
@@ -34,6 +35,7 @@ const windowComponents: Record<string, ReactNode> = {
   music:       <MusicWindow />,
   books:       <BookshelfWindow />,
   watch:       <WatchlistWindow />,
+  videos:      <VideosWindow />,
   food:        <FoodWindow />,
   camera:      <CameraWindow />,
   running:     <RunningWindow />,
@@ -57,6 +59,21 @@ const TOPBAR_H  = 36;
 const TASKBAR_H = 40;
 const WIN_W = 600;
 const WIN_H = 400;
+
+function getWindowSize(id: string) {
+  if (id !== "videos" || typeof window === "undefined") {
+    return { width: WIN_W, height: WIN_H };
+  }
+
+  const maxWidth = Math.max(320, window.innerWidth - 48);
+  const maxHeight = Math.max(320, window.innerHeight - TOPBAR_H - TASKBAR_H - 32);
+  const targetWidth = Math.min(1120, Math.round(window.innerWidth * 0.78));
+  const width = Math.min(maxWidth, Math.max(700, targetWidth));
+  const targetHeight = Math.round((width * 9) / 16 + 176);
+  const height = Math.min(maxHeight, Math.max(500, targetHeight));
+
+  return { width, height };
+}
 
 const WALLPAPERS = [
   { from: "from-amber-100/90",   to: "to-amber-50/80"   },
@@ -109,8 +126,9 @@ export default function Home() {
       const count = prev.length;
       const vw = window.innerWidth;
       const vh = window.innerHeight;
-      const x = Math.max(20, Math.min(vw - WIN_W - 20, (vw - WIN_W) / 2 + count * 40));
-      const y = Math.max(TOPBAR_H + 10, Math.min(vh - WIN_H - TASKBAR_H - 10, (vh - WIN_H - TASKBAR_H) / 2 + count * 40));
+      const { width, height } = getWindowSize(id);
+      const x = Math.max(20, Math.min(vw - width - 20, (vw - width) / 2 + count * 40));
+      const y = Math.max(TOPBAR_H + 10, Math.min(vh - height - TASKBAR_H - 10, (vh - height - TASKBAR_H) / 2 + count * 40));
       return [...prev, { id, x, y, zIndex: newZ, minimized: false }];
     });
   };
@@ -171,24 +189,30 @@ export default function Home() {
           {!isMobile && <NowPlayingWidget />}
 
           {/* Windows */}
-          {openWindows.map((win) => (
-            <Window
-              key={win.id}
-              id={win.id}
-              title={sectionMap[win.id]?.title || ""}
-              x={win.x}
-              y={win.y}
-              zIndex={win.zIndex}
-              minimized={win.minimized}
-              isMobile={isMobile}
-              onClose={() => closeWindow(win.id)}
-              onMinimize={() => minimizeWindow(win.id)}
-              onFocus={() => focusWindow(win.id)}
-              onDrag={(x, y) => dragWindow(win.id, x, y)}
-            >
-              {windowComponents[win.id]}
-            </Window>
-          ))}
+          {openWindows.map((win) => {
+            const { width, height } = getWindowSize(win.id);
+
+            return (
+              <Window
+                key={win.id}
+                id={win.id}
+                title={sectionMap[win.id]?.title || ""}
+                x={win.x}
+                y={win.y}
+                width={width}
+                height={height}
+                zIndex={win.zIndex}
+                minimized={win.minimized}
+                isMobile={isMobile}
+                onClose={() => closeWindow(win.id)}
+                onMinimize={() => minimizeWindow(win.id)}
+                onFocus={() => focusWindow(win.id)}
+                onDrag={(x, y) => dragWindow(win.id, x, y)}
+              >
+                {windowComponents[win.id]}
+              </Window>
+            );
+          })}
 
           {/* Desktop-only overlays */}
           {!isMobile && contextMenu && (
