@@ -3,8 +3,16 @@
 import { useState } from "react";
 
 const initialEntries = [
-  { name: "Sam", date: "May 2025", message: "sick site dude. love the retro vibes" },
-  { name: "Priya", date: "Apr 2025", message: "ankit built this in a weekend apparently??" },
+  {
+    name: "Sam",
+    date: "May 2025",
+    message: "sick site dude. love the retro vibes",
+  },
+  {
+    name: "Priya",
+    date: "Apr 2025",
+    message: "ankit built this in a weekend apparently??",
+  },
   { name: "Jake", date: "Apr 2025", message: "the minesweeper window lmaooo" },
   { name: "anonymous", date: "Mar 2025", message: "42 is indeed the answer" },
 ];
@@ -19,7 +27,14 @@ export default function GuestbookWindow() {
     e.preventDefault();
     if (!name.trim() || !message.trim()) return;
     setEntries((prev) => [
-      { name: name.trim(), date: "May 2025", message: message.trim() },
+      {
+        name: name.trim(),
+        date: new Date().toLocaleDateString("en-US", {
+          month: "short",
+          year: "numeric",
+        }),
+        message: message.trim(),
+      },
       ...prev,
     ]);
     setName("");
@@ -33,7 +48,9 @@ export default function GuestbookWindow() {
       <div className="pixelated-border bg-amber-100 p-3">
         <div className="mb-2 text-amber-800">SIGN_GUESTBOOK.exe</div>
         {submitted ? (
-          <div className="text-green-600">entry added! thanks for signing ✓</div>
+          <div className="text-green-600">
+            entry added! thanks for signing ✓
+          </div>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-2">
             <div>
