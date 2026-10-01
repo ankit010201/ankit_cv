@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { createPortal } from "react-dom";
+import Image from "next/image";
+import { useState } from "react";
+import RetroModal from "@/components/RetroModal";
 
 const photos = [
   { file: "IMG_0439.jpg", label: "fuji from the shrine" },
@@ -15,72 +16,90 @@ const photos = [
 ];
 
 export default function CameraWindow() {
-  const [selected, setSelected] = useState<(typeof photos)[0] | null>(null);
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => setMounted(true), []);
-
-  const lightbox = selected && mounted && createPortal(
-    <div
-      className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/80"
-      onClick={() => setSelected(null)}
-    >
-      <div
-        className="pixelated-window bg-amber-50"
-        style={{ maxWidth: "80vw", maxHeight: "80vh" }}
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div className="pixelated-border flex items-center justify-between bg-amber-200 p-2">
-          <div className="retro-font flex items-center gap-2 text-xs">
-            <div className="pixelated-border h-4 w-4 bg-gray-700"></div>
-            {selected.label}
-          </div>
-          <button
-            onClick={() => setSelected(null)}
-            className="pixelated-button retro-font bg-amber-300 px-2 text-sm"
-          >
-            X
-          </button>
-        </div>
-        <div className="p-2">
-          <img
-            src={`/photos/${selected.file}`}
-            alt={selected.label}
-            style={{ maxWidth: "76vw", maxHeight: "70vh" }}
-            className="block object-contain"
-          />
-        </div>
-      </div>
-    </div>,
-    document.body,
-  );
+  const [selected, setSelected] = useState<number | null>(null);
+  const photo = selected === null ? null : photos[selected];
+  const move = (direction: number) =>
+    setSelected((index) =>
+      index === null
+        ? null
+        : (index + direction + photos.length) % photos.length,
+    );
 
   return (
     <div className="retro-font space-y-3 text-xs">
-      <div className="text-gray-400">// shot on iphone, no edits</div>
-
+      <div className="text-gray-500">// shot on iphone, no edits</div>
       <div className="grid grid-cols-2 gap-2">
-        {photos.map((p, i) => (
-          <div
-            key={i}
-            className="pixelated-border cursor-pointer overflow-hidden hover:opacity-90"
-            onClick={() => setSelected(p)}
+        {photos.map((photo, index) => (
+          <button
+            key={photo.file}
+            type="button"
+            aria-label={`View ${photo.label}`}
+            className="pixelated-border overflow-hidden text-left hover:opacity-90"
+            onClick={() => setSelected(index)}
           >
-            <img
-              src={`/photos/${p.file}`}
-              alt={p.label}
+            <Image
+              src={`/photos/${photo.file}`}
+              alt={photo.label}
+              width={480}
+              height={320}
+              sizes="(max-width: 767px) 45vw, 280px"
               className="h-28 w-full object-cover"
             />
-            <div className="bg-amber-50 px-1 py-0.5 text-gray-600">{p.label}</div>
-          </div>
+            <div className="bg-amber-50 px-1 py-0.5 text-gray-600">
+              {photo.label}
+            </div>
+          </button>
         ))}
       </div>
-
-      <div className="pixelated-border bg-amber-100 p-2">
-        <div className="text-gray-500">gear: iphone 14 pro</div>
+      <div className="pixelated-border bg-amber-100 p-2 text-gray-500">
+        gear: iphone 14 pro
       </div>
-
-      {lightbox}
+      {photo && (
+        <RetroModal
+          title={photo.label}
+          description="Photo viewer. Use the left and right arrow keys to browse."
+          onClose={() => setSelected(null)}
+          className="max-w-4xl"
+          onKeyDown={(event) => {
+            if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+              event.preventDefault();
+              move(event.key === "ArrowLeft" ? -1 : 1);
+            }
+          }}
+        >
+          <div>
+            <Image
+              src={`/photos/${photo.file}`}
+              alt={photo.label}
+              width={1600}
+              height={1200}
+              sizes="(max-width: 900px) 90vw, 850px"
+              className="mx-auto max-h-[60dvh] w-auto max-w-full object-contain"
+            />
+            <div className="mt-3 flex items-center justify-between gap-2">
+              <button
+                type="button"
+                onClick={() => move(-1)}
+                className="pixelated-button bg-amber-100 px-3 py-2"
+                aria-label="Previous photo"
+              >
+                ←
+              </button>
+              <span aria-live="polite">
+                {selected! + 1} / {photos.length}
+              </span>
+              <button
+                type="button"
+                onClick={() => move(1)}
+                className="pixelated-button bg-amber-100 px-3 py-2"
+                aria-label="Next photo"
+              >
+                →
+              </button>
+            </div>
+          </div>
+        </RetroModal>
+      )}
     </div>
   );
 }

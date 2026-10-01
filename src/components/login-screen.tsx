@@ -10,7 +10,6 @@ interface LoginScreenProps {
 export default function LoginScreen({ onLogin }: LoginScreenProps) {
   const [showPassword, setShowPassword] = useState(false);
   const [password, setPassword] = useState("");
-  const [isTyping, setIsTyping] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showCursor, setShowCursor] = useState(true);
   const [showProfile, setShowProfile] = useState(false);
@@ -36,9 +35,10 @@ export default function LoginScreen({ onLogin }: LoginScreenProps) {
   // Simulate typing animation
   useEffect(() => {
     if (showPassword) {
-      setIsTyping(true);
       const correctPassword = "42istheanswer";
       let currentIndex = 0;
+      let successTimer: ReturnType<typeof setTimeout> | undefined;
+      let loginTimer: ReturnType<typeof setTimeout> | undefined;
 
       const typingInterval = setInterval(() => {
         if (currentIndex < correctPassword.length) {
@@ -46,21 +46,24 @@ export default function LoginScreen({ onLogin }: LoginScreenProps) {
           currentIndex++;
         } else {
           clearInterval(typingInterval);
-          setIsTyping(false);
 
           // Wait a moment before showing login success
-          setTimeout(() => {
+          successTimer = setTimeout(() => {
             setIsLoggedIn(true);
 
             // Wait a moment before calling onLogin
-            setTimeout(() => {
+            successTimer = setTimeout(() => {
               onLogin();
             }, 1000);
           }, 500);
         }
       }, 100);
 
-      return () => clearInterval(typingInterval);
+      return () => {
+        clearInterval(typingInterval);
+        clearTimeout(successTimer);
+        clearTimeout(loginTimer);
+      };
     }
   }, [showPassword, onLogin]);
 
@@ -114,6 +117,13 @@ export default function LoginScreen({ onLogin }: LoginScreenProps) {
             </div>
           )}
 
+          <button
+            type="button"
+            onClick={onLogin}
+            className="pixelated-button retro-font mt-3 bg-amber-100 px-3 py-2 text-xs text-gray-700"
+          >
+            Skip intro →
+          </button>
           <div className="retro-font mt-4 text-xs text-gray-500">
             PersonalOS v1.0.0
           </div>

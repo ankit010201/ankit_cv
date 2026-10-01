@@ -1,20 +1,22 @@
 "use client";
 
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useCallback } from "react";
 import { createPortal } from "react-dom";
 
-const CHARS = "アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ@#$%&";
+const CHARS =
+  "アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ@#$%&";
 
 function MatrixCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    canvas.width  = window.innerWidth;
+    canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
     const fontSize = 14;
@@ -47,45 +49,32 @@ function MatrixCanvas() {
   return <canvas ref={canvasRef} className="absolute inset-0" />;
 }
 
-const INACTIVITY_MS = 15_000;
-
-export default function Screensaver() {
-  const [active, setActive] = useState(false);
-  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  const wake = useCallback(() => {
-    setActive(false);
-    if (timerRef.current) clearTimeout(timerRef.current);
-    timerRef.current = setTimeout(() => setActive(true), INACTIVITY_MS);
-  }, []);
-
+export default function Screensaver({ onWake }: { onWake: () => void }) {
+  const wake = useCallback(() => onWake(), [onWake]);
   useEffect(() => {
-    const events = ["mousemove", "mousedown", "keydown", "touchstart", "wheel"] as const;
-    events.forEach((ev) => document.addEventListener(ev, wake, { passive: true }));
-    timerRef.current = setTimeout(() => setActive(true), INACTIVITY_MS);
-    return () => {
-      events.forEach((ev) => document.removeEventListener(ev, wake));
-      if (timerRef.current) clearTimeout(timerRef.current);
-    };
+    const events = ["pointerdown", "keydown", "touchstart", "wheel"] as const;
+    events.forEach((event) =>
+      document.addEventListener(event, wake, { passive: true }),
+    );
+    return () =>
+      events.forEach((event) => document.removeEventListener(event, wake));
   }, [wake]);
-
-  if (!active) return null;
-
   return createPortal(
-    <div
-      className="fixed inset-0 cursor-none bg-black"
-      style={{ zIndex: 99999 }}
-      onClick={wake}
-    >
+    <div className="fixed inset-0 z-[99999] bg-black" onClick={wake}>
       <MatrixCanvas />
       <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center gap-4">
-        <div className="retro-font text-lg text-green-400" style={{ textShadow: "0 0 20px #00ff00" }}>
-          PersonalOS
-        </div>
-        <div className="retro-font text-xs text-green-700 animate-pulse">
-          move mouse or click to wake
+        <div className="retro-font text-lg text-green-400">PersonalOS</div>
+        <div className="retro-font text-xs text-green-200">
+          press any key or tap to return
         </div>
       </div>
+      <button
+        autoFocus
+        className="pixelated-button retro-font absolute bottom-8 left-1/2 -translate-x-1/2 bg-amber-100 px-3 py-2 text-xs"
+        onClick={wake}
+      >
+        Exit screensaver
+      </button>
     </div>,
     document.body,
   );
