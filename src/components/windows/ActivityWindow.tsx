@@ -18,13 +18,6 @@ const hikes = [
   { name: "Fuji Hike", date: "Apr 23, 2026", distance: "9.60 mi", detail: "Fujiyoshida, Japan · 3:25:17 · 1,255 ft elevation · 19,294 steps" },
 ];
 
-const runHighlights = [
-  { name: "Afternoon Run", date: "May 13, 2026", location: "San Francisco, CA", distance: "2.06 mi", pace: "7:09/mi", time: "14:46", note: "🏆 fastest 2 miles ever" },
-  { name: "Marathon day!", date: "Dec 10, 2023", location: "Fremont, CA", distance: "25.93 mi", pace: "12:11/mi", time: "5:16:05", note: "that was the hardest thing i've ever done" },
-  { name: "Marathon training: Run 25", date: "Oct 30, 2023", location: "Manhattan, NY", distance: "12.12 mi", pace: "9:32/mi", time: "1:55:35", note: "317 ft elevation" },
-  { name: "Seattle half marathon!!", date: "Nov 26, 2022", location: "Seattle, WA", distance: "13.41 mi", pace: "10:51/mi", time: "2:25:31", note: "first official race 🎉" },
-];
-
 export default function ActivityWindow() {
   const [view, setView] = useState<View>("All");
   const show = (sport: View) => view === "All" || view === sport;
@@ -79,30 +72,11 @@ export default function ActivityWindow() {
       )}
 
       {show("Running") && (
-        <>
-          <div className="pixelated-border bg-amber-100 p-3">
-            <div className="mb-2 text-amber-800">THIS_WEEK_RUNS.log</div>
-            <iframe title="Ankit’s running summary for the current week" src="https://www.strava.com/athletes/102971976/activity-summary/f61e1432e321bcc57a472dff80d99a2bf39afc95" width="300" height="160" loading="lazy" className="mx-auto max-w-full border-0" />
-          </div>
-          <div className="pixelated-border bg-amber-100 p-3">
-            <div className="mb-2 text-amber-800">LATEST_RUNS.gpx</div>
-            <iframe title="Ankit’s latest Strava runs" src="https://www.strava.com/athletes/102971976/latest-rides/f61e1432e321bcc57a472dff80d99a2bf39afc95" width="300" height="454" loading="lazy" className="mx-auto max-w-full border-0" />
-            <div className="mt-2 text-gray-500">Updated by Strava.</div>
-          </div>
-          <div className="pixelated-border bg-amber-100 p-3">
-            <div className="mb-2 text-amber-800">RUN_HIGHLIGHTS.gpx</div>
-            <div className="space-y-2">
-              {runHighlights.map((run) => (
-                <div key={run.name} className="pixelated-border bg-white p-2">
-                  <div className="flex flex-wrap justify-between gap-1"><span className="text-gray-900">{run.name}</span><span className="text-amber-700">{run.distance}</span></div>
-                  <div className="mt-1 text-gray-500">{run.date} · {run.location}</div>
-                  <div className="mt-1 text-gray-500">{run.pace} · {run.time}</div>
-                  <div className="mt-1 text-gray-600">{run.note}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </>
+        <div className="pixelated-border bg-amber-100 p-3">
+          <div className="mb-2 text-amber-800">LATEST_RUNS.gpx</div>
+          <iframe title="Ankit’s latest Strava runs" src="https://www.strava.com/athletes/102971976/latest-rides/f61e1432e321bcc57a472dff80d99a2bf39afc95" width="300" height="454" loading="lazy" className="mx-auto max-w-full border-0" />
+          <div className="mt-2 text-gray-500">Updated by Strava.</div>
+        </div>
       )}
 
       {show("Hiking") && (
