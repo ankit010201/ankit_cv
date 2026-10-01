@@ -8,7 +8,7 @@ const iconEmoji: Record<string, string> = {
   film:   "🎬",
   fork:   "🍽️",
   camera: "📷",
-  run:    "🏃",
+  activity: "🚴",
   tape:   "📼",
   term:   "⌨️",
   bomb:   "💣",

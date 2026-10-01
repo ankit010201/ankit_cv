@@ -23,7 +23,7 @@ import WatchlistWindow from "@/components/windows/WatchlistWindow";
 import VideosWindow from "@/components/windows/VideosWindow";
 import FoodWindow from "@/components/windows/FoodWindow";
 import CameraWindow from "@/components/windows/CameraWindow";
-import RunningWindow from "@/components/windows/RunningWindow";
+import ActivityWindow from "@/components/windows/ActivityWindow";
 import TerminalWindow from "@/components/windows/TerminalWindow";
 import GuestbookWindow from "@/components/windows/GuestbookWindow";
 import MinesweeperWindow from "@/components/windows/MinesweeperWindow";
@@ -38,7 +38,7 @@ const windowComponents: Record<string, ReactNode> = {
   videos:      <VideosWindow />,
   food:        <FoodWindow />,
   camera:      <CameraWindow />,
-  running:     <RunningWindow />,
+  running:     <ActivityWindow />,
   mixtape:     <MixtapeWindow />,
   guestbook:   <GuestbookWindow />,
   terminal:    <TerminalWindow />,

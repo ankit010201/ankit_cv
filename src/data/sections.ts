@@ -13,7 +13,7 @@ export const sections: Section[] = [
   { id: "videos",      title: "Videos",       icon: "video"      },
   { id: "food",        title: "Food Log",     icon: "fork"       },
   { id: "camera",      title: "Camera Roll",  icon: "camera"     },
-  { id: "running",     title: "Running",      icon: "run"        },
+  { id: "running",     title: "Activity",     icon: "activity"        },
   { id: "mixtape",     title: "Mixtape",      icon: "tape"       },
   { id: "terminal",    title: "Terminal",     icon: "term"       },
   { id: "minesweeper", title: "Minesweeper",  icon: "bomb"       },
