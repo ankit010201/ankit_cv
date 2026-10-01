@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 
+import { useLiveJson } from "@/hooks/useLiveJson";
+
 interface NowPlaying {
   isPlaying: boolean;
   title?: string;
@@ -14,20 +16,41 @@ interface NowPlaying {
 function EqBars() {
   return (
     <div className="flex items-end gap-px" style={{ height: 18 }}>
-      <div className="eq-bar-1 w-1.5 rounded-sm bg-green-500" style={{ height: 4 }} />
-      <div className="eq-bar-2 w-1.5 rounded-sm bg-green-500" style={{ height: 10 }} />
-      <div className="eq-bar-3 w-1.5 rounded-sm bg-green-400" style={{ height: 14 }} />
-      <div className="eq-bar-4 w-1.5 rounded-sm bg-green-500" style={{ height: 6 }} />
-      <div className="eq-bar-5 w-1.5 rounded-sm bg-green-500" style={{ height: 12 }} />
+      <div
+        className="eq-bar-1 w-1.5 rounded-sm bg-green-500"
+        style={{ height: 4 }}
+      />
+      <div
+        className="eq-bar-2 w-1.5 rounded-sm bg-green-500"
+        style={{ height: 10 }}
+      />
+      <div
+        className="eq-bar-3 w-1.5 rounded-sm bg-green-400"
+        style={{ height: 14 }}
+      />
+      <div
+        className="eq-bar-4 w-1.5 rounded-sm bg-green-500"
+        style={{ height: 6 }}
+      />
+      <div
+        className="eq-bar-5 w-1.5 rounded-sm bg-green-500"
+        style={{ height: 12 }}
+      />
     </div>
   );
 }
 
-const INITIAL_X = () => (typeof window !== "undefined" ? window.innerWidth - 252 : 1200);
-const INITIAL_Y = () => (typeof window !== "undefined" ? window.innerHeight - 130 : 600);
+const INITIAL_X = () =>
+  typeof window !== "undefined" ? window.innerWidth - 252 : 1200;
+const INITIAL_Y = () =>
+  typeof window !== "undefined" ? window.innerHeight - 130 : 600;
 
 export default function NowPlayingWidget() {
-  const [data, setData] = useState<NowPlaying | null>(null);
+  const { data, error } = useLiveJson<NowPlaying | null>(
+    "/api/spotify/now-playing",
+    null,
+    30_000,
+  );
   const [collapsed, setCollapsed] = useState(false);
   const [pos, setPos] = useState({ x: 0, y: 0 });
   const [dragging, setDragging] = useState(false);
@@ -40,16 +63,12 @@ export default function NowPlayingWidget() {
   }, []);
 
   useEffect(() => {
-    fetch("/api/spotify/now-playing")
-      .then((r) => r.json())
-      .then(setData)
-      .catch(() => {});
-  }, []);
-
-  useEffect(() => {
     if (!dragging) return;
     const onMove = (e: MouseEvent) =>
-      onDragRef.current(e.clientX - offset.current.x, e.clientY - offset.current.y);
+      onDragRef.current(
+        e.clientX - offset.current.x,
+        e.clientY - offset.current.y,
+      );
     const onUp = () => setDragging(false);
     document.addEventListener("mousemove", onMove);
     document.addEventListener("mouseup", onUp);
@@ -75,11 +94,11 @@ export default function NowPlayingWidget() {
       ? Math.round((data.progress / data.duration) * 100)
       : 0;
 
-  if (!data?.isPlaying) return null;
+  if (error || !data?.isPlaying) return null;
 
   return (
     <div
-      className="pixelated-window absolute bg-gray-900 text-white select-none"
+      className="pixelated-window absolute select-none bg-gray-900 text-white"
       style={{ left: pos.x, top: pos.y, width: 236, zIndex: 35 }}
     >
       {/* title bar — drag handle */}
@@ -92,7 +111,7 @@ export default function NowPlayingWidget() {
           <span className="retro-font text-xs text-green-400">NOW_PLAYING</span>
         </div>
         <button
-          className="retro-font text-xs text-gray-400 hover:text-white px-1"
+          className="retro-font px-1 text-xs text-gray-400 hover:text-white"
           onMouseDown={(e) => e.stopPropagation()}
           onClick={() => setCollapsed((c) => !c)}
         >
@@ -101,21 +120,25 @@ export default function NowPlayingWidget() {
       </div>
 
       {!collapsed && (
-        <div className="p-2 space-y-2">
+        <div className="space-y-2 p-2">
           {/* track info row */}
           <div className="flex items-center gap-2">
             {data.albumImage ? (
               <img
                 src={data.albumImage}
                 alt="album"
-                className="h-10 w-10 flex-shrink-0 object-cover pixelated-border"
+                className="pixelated-border h-10 w-10 flex-shrink-0 object-cover"
               />
             ) : (
               <div className="pixelated-border h-10 w-10 flex-shrink-0 bg-gradient-to-br from-purple-500 to-pink-600" />
             )}
             <div className="min-w-0 flex-1">
-              <div className="retro-font truncate text-xs text-white">{data.title}</div>
-              <div className="retro-font truncate text-xs text-gray-400">{data.artist}</div>
+              <div className="retro-font truncate text-xs text-white">
+                {data.title}
+              </div>
+              <div className="retro-font truncate text-xs text-gray-400">
+                {data.artist}
+              </div>
             </div>
             <EqBars />
           </div>

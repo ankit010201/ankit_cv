@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useLiveJson } from "@/hooks/useLiveJson";
 
 interface Track {
   title: string;
@@ -11,6 +11,7 @@ interface Playlist {
   id: string;
   name: string;
   tracks: Track[];
+  url: string;
 }
 
 const TAPE_COLORS = [
@@ -22,17 +23,12 @@ const TAPE_COLORS = [
 ];
 
 export default function MixtapeWindow() {
-  const [playlists, setPlaylists] = useState<Playlist[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetch("/api/spotify/playlists")
-      .then((r) => r.json())
-      .then((data) => {
-        setPlaylists(data.playlists ?? []);
-        setLoading(false);
-      });
-  }, []);
+  const { data, loading, error } = useLiveJson<{ playlists: Playlist[] }>(
+    "/api/spotify/playlists",
+    { playlists: [] },
+    300_000,
+  );
+  const playlists = data.playlists;
 
   if (loading) {
     return (
@@ -45,21 +41,32 @@ export default function MixtapeWindow() {
   if (playlists.length === 0) {
     return (
       <div className="retro-font flex h-full items-center justify-center text-xs text-gray-400">
-        no playlists found
+        {error ? "Spotify is temporarily unavailable" : "no playlists found"}
       </div>
     );
   }
 
   return (
     <div className="retro-font space-y-3 text-xs">
-      <div className="text-gray-400">// 5 most recent playlists</div>
+      <div className="text-gray-400">
+        // playlists from Spotify · refreshes automatically
+      </div>
       {playlists.map((pl, i) => (
         <div key={pl.id} className="pixelated-border bg-amber-100 p-3">
           <div className="mb-2 flex items-center gap-2">
             <div
-              className={`pixelated-border h-8 w-12 flex-shrink-0 bg-gradient-to-r ${TAPE_COLORS[i % TAPE_COLORS.length]}`}
+              className={`pixelated-border h-8 w-12 flex-shrink-0 bg-gradient-to-r ${
+                TAPE_COLORS[i % TAPE_COLORS.length]
+              }`}
             ></div>
-            <div className="truncate text-amber-800">{pl.name}</div>
+            <a
+              href={pl.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="truncate text-amber-800 hover:underline"
+            >
+              {pl.name}
+            </a>
           </div>
           <div className="space-y-0.5 text-gray-700">
             {pl.tracks.map((t, j) => (

@@ -2,19 +2,63 @@
 
 import { ExternalLink, Play } from "lucide-react";
 import { useState } from "react";
-
-const youtubeVideo = {
-  id: "NbpG7rcOVNc",
-  title: "drifting though japan",
-  description: "no talking, just vibes. stitched together a few short clips from my time in japan to make one giant recap video",
-  url: "https://www.youtube.com/watch?v=NbpG7rcOVNc",
-};
-
-const thumbnailUrl = `https://i.ytimg.com/vi/${youtubeVideo.id}/maxresdefault.jpg`;
-const fallbackThumbnailUrl = `https://i.ytimg.com/vi/${youtubeVideo.id}/hqdefault.jpg`;
-const embedUrl = `https://www.youtube-nocookie.com/embed/${youtubeVideo.id}?autoplay=1&rel=0&modestbranding=1`;
+import snapshot from "@/data/videos.json";
+import { useLiveJson } from "@/hooks/useLiveJson";
 
 export default function VideosWindow() {
+  const { data, error } = useLiveJson(
+    "/api/youtube",
+    { videos: snapshot, stale: true },
+    300_000,
+  );
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const youtubeVideo =
+    data.videos.find((video) => video.id === selectedId) ?? data.videos[0];
+  return (
+    <div className="retro-font space-y-3 text-xs">
+      <div className="flex flex-wrap justify-between gap-2 text-gray-500">
+        <span>
+          {data.stale || error
+            ? "saved uploads · Sep 30, 2026"
+            : "latest uploads"}
+        </span>
+        <a
+          href="https://www.youtube.com/@4nkitagrawal/videos"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-blue-700 hover:underline"
+        >
+          → YouTube channel
+        </a>
+      </div>
+      <div className="flex flex-wrap gap-2">
+        {data.videos.map((video) => (
+          <button
+            key={video.id}
+            type="button"
+            onClick={() => setSelectedId(video.id)}
+            aria-pressed={youtubeVideo.id === video.id}
+            className={`pixelated-button px-2 py-1 ${
+              youtubeVideo.id === video.id ? "bg-amber-300" : "bg-amber-100"
+            }`}
+          >
+            {video.title}
+          </button>
+        ))}
+      </div>
+      <VideoPlayer key={youtubeVideo.id} youtubeVideo={youtubeVideo} />
+    </div>
+  );
+}
+
+function VideoPlayer({
+  youtubeVideo,
+}: {
+  youtubeVideo: (typeof snapshot)[number];
+}) {
+  const thumbnailUrl = `https://i.ytimg.com/vi/${youtubeVideo.id}/maxresdefault.jpg`;
+  const fallbackThumbnailUrl = `https://i.ytimg.com/vi/${youtubeVideo.id}/hqdefault.jpg`;
+  const embedUrl = `https://www.youtube-nocookie.com/embed/${youtubeVideo.id}?autoplay=1&rel=0`;
   const [isPlaying, setIsPlaying] = useState(false);
   const [thumbnail, setThumbnail] = useState(thumbnailUrl);
 
