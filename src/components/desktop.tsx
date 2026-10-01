@@ -5,15 +5,17 @@ import { sections } from "../data/sections";
 
 interface DesktopProps {
   onIconClick: (id: string) => void;
-  changeBackground: (background: string) => void;
   isMobile?: boolean;
 }
 
-export default function Desktop({ onIconClick, isMobile = false }: DesktopProps) {
+export default function Desktop({
+  onIconClick,
+  isMobile = false,
+}: DesktopProps) {
   if (isMobile) {
     return (
-      <div className="pixelated-grid relative flex-1 w-full overflow-auto flex flex-col items-center justify-start pt-6 pb-4">
-        <div className="grid grid-cols-3 gap-3 px-4">
+      <div className="pixelated-grid relative flex w-full flex-1 flex-col items-center justify-start overflow-auto pb-4 pt-6">
+        <div className="grid grid-cols-3 gap-2 px-2">
           {sections.map((section) => (
             <DesktopIcon
               key={section.id}
@@ -29,8 +31,11 @@ export default function Desktop({ onIconClick, isMobile = false }: DesktopProps)
   }
 
   return (
-    <div className="pixelated-grid relative flex-1 w-full overflow-auto">
-      <div className="inline-grid grid-cols-2 gap-3 p-4" style={{ gridAutoRows: "min-content" }}>
+    <div className="pixelated-grid relative w-full flex-1 overflow-auto">
+      <div
+        className="inline-grid grid-cols-2 gap-3 p-4"
+        style={{ gridAutoRows: "min-content" }}
+      >
         {sections.map((section) => (
           <DesktopIcon
             key={section.id}

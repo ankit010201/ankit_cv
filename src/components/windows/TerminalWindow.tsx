@@ -46,7 +46,7 @@ export default function TerminalWindow() {
       setLines([]);
     } else if (cmd === "") {
       // do nothing
-    } else if (cmd in COMMANDS) {
+    } else if (Object.hasOwn(COMMANDS, cmd)) {
       const result = COMMANDS[cmd];
       const output = typeof result === "function" ? result() : result;
       setLines((prev) => [...prev, { type: "output", text: output }]);
@@ -61,9 +61,7 @@ export default function TerminalWindow() {
 
   return (
     <div className="retro-font flex h-full flex-col bg-gray-900 p-3 text-xs text-green-400">
-      <div className="mb-2 text-green-600">
-        ┌─[ankit@PersonalOS]─[~]
-      </div>
+      <div className="mb-2 text-green-600">┌─[ankit@PersonalOS]─[~]</div>
       <div className="flex-1 overflow-auto">
         {lines.map((line, i) => (
           <div
@@ -81,10 +79,14 @@ export default function TerminalWindow() {
         ))}
         <div ref={bottomRef} />
       </div>
-      <form onSubmit={handleSubmit} className="flex items-center gap-1 border-t border-green-900 pt-2">
+      <form
+        onSubmit={handleSubmit}
+        className="flex items-center gap-1 border-t border-green-900 pt-2"
+      >
         <span className="text-green-600">$</span>
         <input
-          className="flex-1 bg-transparent text-green-300 outline-none placeholder-green-800"
+          aria-label="Terminal command"
+          className="min-w-0 flex-1 bg-transparent text-green-300 placeholder-green-800 outline-none"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="type a command..."

@@ -9,10 +9,15 @@ interface ContextMenuProps {
   onClose: () => void;
   onAbout: () => void;
   onNextWallpaper: () => void;
-  onEmptyTrash: () => void;
 }
 
-export default function ContextMenu({ x, y, onClose, onAbout, onNextWallpaper, onEmptyTrash }: ContextMenuProps) {
+export default function ContextMenu({
+  x,
+  y,
+  onClose,
+  onAbout,
+  onNextWallpaper,
+}: ContextMenuProps) {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -21,7 +26,9 @@ export default function ContextMenu({ x, y, onClose, onAbout, onNextWallpaper, o
         onClose();
       }
     };
-    const handleKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
     // Use a timeout so this listener doesn't catch the same right-click that opened the menu
     const t = setTimeout(() => {
       document.addEventListener("mousedown", handle);
@@ -35,15 +42,24 @@ export default function ContextMenu({ x, y, onClose, onAbout, onNextWallpaper, o
   }, [onClose]);
 
   const menuW = 192;
-  const menuH = 160;
-  const left = x + menuW > window.innerWidth  ? x - menuW : x;
-  const top  = y + menuH > window.innerHeight ? y - menuH : y;
+  const menuH = 130;
+  const left = x + menuW > window.innerWidth ? x - menuW : x;
+  const top = y + menuH > window.innerHeight ? y - menuH : y;
 
   const items = [
-    { label: "About This Computer", icon: "💻", action: onAbout,         dividerAfter: true  },
-    { label: "Change Wallpaper",    icon: "🎨", action: onNextWallpaper, dividerAfter: false },
-    { label: "Empty Trash",         icon: "🗑️", action: onEmptyTrash,    dividerAfter: true  },
-    { label: "Dismiss",             icon: "✕",  action: onClose,         dividerAfter: false },
+    {
+      label: "About This Computer",
+      icon: "💻",
+      action: onAbout,
+      dividerAfter: true,
+    },
+    {
+      label: "Change Wallpaper",
+      icon: "🎨",
+      action: onNextWallpaper,
+      dividerAfter: false,
+    },
+    { label: "Dismiss", icon: "✕", action: onClose, dividerAfter: false },
   ];
 
   return createPortal(
@@ -57,12 +73,17 @@ export default function ContextMenu({ x, y, onClose, onAbout, onNextWallpaper, o
           <button
             className="retro-font flex w-full items-center gap-2 px-3 py-1.5 text-left text-xs text-gray-700 hover:bg-amber-200"
             onMouseDown={(e) => e.stopPropagation()}
-            onClick={() => { item.action(); onClose(); }}
+            onClick={() => {
+              item.action();
+              onClose();
+            }}
           >
             <span className="w-4 text-sm leading-none">{item.icon}</span>
             {item.label}
           </button>
-          {item.dividerAfter && <div className="mx-2 my-0.5 border-t border-amber-300" />}
+          {item.dividerAfter && (
+            <div className="mx-2 my-0.5 border-t border-amber-300" />
+          )}
         </div>
       ))}
     </div>,

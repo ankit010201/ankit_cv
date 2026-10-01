@@ -1,21 +1,7 @@
 const { test } = require("node:test");
 const assert = require("node:assert/strict");
-const fs = require("node:fs");
-const Module = require("node:module");
-const ts = require("typescript");
-const path = require("node:path");
-const filename = path.resolve("src/lib/feeds.ts");
-const compiled = ts.transpileModule(fs.readFileSync(filename, "utf8"), {
-  compilerOptions: {
-    module: ts.ModuleKind.CommonJS,
-    target: ts.ScriptTarget.ES2022,
-  },
-}).outputText;
-const loaded = new Module(filename, module);
-loaded.filename = filename;
-loaded.paths = module.paths;
-loaded._compile(compiled, filename);
-const { parseLetterboxd, parseYouTube, parseYouTubePage } = loaded.exports;
+const { parseLetterboxd, parseYouTube, parseYouTubePage } =
+  require("./load-typescript.cjs")("src/lib/feeds.ts");
 
 test("Letterboxd keeps watched dates, half stars, decoded plain review text and spoiler flags", () => {
   const [film] = parseLetterboxd(

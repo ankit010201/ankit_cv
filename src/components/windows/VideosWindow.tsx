@@ -37,16 +37,22 @@ export default function VideosWindow() {
             key={video.id}
             type="button"
             onClick={() => setSelectedId(video.id)}
-            aria-pressed={youtubeVideo.id === video.id}
+            aria-pressed={youtubeVideo?.id === video.id}
             className={`pixelated-button px-2 py-1 ${
-              youtubeVideo.id === video.id ? "bg-amber-300" : "bg-amber-100"
+              youtubeVideo?.id === video.id ? "bg-amber-300" : "bg-amber-100"
             }`}
           >
             {video.title}
           </button>
         ))}
       </div>
-      <VideoPlayer key={youtubeVideo.id} youtubeVideo={youtubeVideo} />
+      {youtubeVideo ? (
+        <VideoPlayer key={youtubeVideo.id} youtubeVideo={youtubeVideo} />
+      ) : (
+        <p className="text-gray-600">
+          No uploads available right now. Try the YouTube channel link above.
+        </p>
+      )}
     </div>
   );
 }

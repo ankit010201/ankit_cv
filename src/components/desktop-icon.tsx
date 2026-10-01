@@ -22,7 +22,7 @@ function getRetroIcon(icon: string) {
     case "user":
       return (
         <PixelIcon>
-          <div className="pixelated-border h-9 w-9 bg-gray-700 flex flex-col items-center justify-center gap-0.5">
+          <div className="pixelated-border flex h-9 w-9 flex-col items-center justify-center gap-0.5 bg-gray-700">
             <div className="h-3 w-3 rounded-full bg-amber-200"></div>
             <div className="h-2 w-5 bg-amber-200"></div>
           </div>
@@ -31,10 +31,10 @@ function getRetroIcon(icon: string) {
     case "clock":
       return (
         <PixelIcon>
-          <div className="pixelated-border h-9 w-9 rounded-full border-2 border-gray-700 bg-amber-50 flex items-center justify-center">
+          <div className="pixelated-border flex h-9 w-9 items-center justify-center rounded-full border-2 border-gray-700 bg-amber-50">
             <div className="relative h-6 w-6">
-              <div className="absolute left-1/2 top-1/2 h-2.5 w-0.5 -translate-x-1/2 origin-bottom -rotate-45 bg-gray-700"></div>
-              <div className="absolute left-1/2 top-1/2 h-2 w-0.5 -translate-x-1/2 origin-bottom rotate-90 bg-gray-700"></div>
+              <div className="absolute left-1/2 top-1/2 h-2.5 w-0.5 origin-bottom -translate-x-1/2 -rotate-45 bg-gray-700"></div>
+              <div className="absolute left-1/2 top-1/2 h-2 w-0.5 origin-bottom -translate-x-1/2 rotate-90 bg-gray-700"></div>
             </div>
           </div>
         </PixelIcon>
@@ -42,11 +42,11 @@ function getRetroIcon(icon: string) {
     case "music":
       return (
         <PixelIcon>
-          <div className="pixelated-border h-9 w-9 bg-purple-600 flex items-center justify-center">
+          <div className="pixelated-border flex h-9 w-9 items-center justify-center bg-purple-600">
             <div className="relative">
               <div className="h-4 w-0.5 bg-white"></div>
               <div className="absolute -top-0.5 left-0 h-0.5 w-3 bg-white"></div>
-              <div className="absolute bottom-0 -left-1.5 h-2 w-2 rounded-full bg-white"></div>
+              <div className="absolute -left-1.5 bottom-0 h-2 w-2 rounded-full bg-white"></div>
               <div className="absolute bottom-0 left-1.5 h-2 w-2 rounded-full bg-white"></div>
             </div>
           </div>
@@ -55,7 +55,7 @@ function getRetroIcon(icon: string) {
     case "book":
       return (
         <PixelIcon>
-          <div className="pixelated-border h-9 w-9 bg-green-600 flex flex-col items-center justify-center gap-0.5 px-1">
+          <div className="pixelated-border flex h-9 w-9 flex-col items-center justify-center gap-0.5 bg-green-600 px-1">
             <div className="h-0.5 w-6 bg-green-200"></div>
             <div className="h-0.5 w-6 bg-green-200"></div>
             <div className="h-0.5 w-6 bg-green-200"></div>
@@ -66,7 +66,7 @@ function getRetroIcon(icon: string) {
     case "film":
       return (
         <PixelIcon>
-          <div className="pixelated-border h-9 w-9 bg-gray-800 flex items-center gap-0.5 px-0.5">
+          <div className="pixelated-border flex h-9 w-9 items-center gap-0.5 bg-gray-800 px-0.5">
             <div className="flex flex-col gap-0.5">
               <div className="h-1.5 w-1.5 bg-gray-400"></div>
               <div className="h-1.5 w-1.5 bg-gray-400"></div>
@@ -84,7 +84,7 @@ function getRetroIcon(icon: string) {
     case "video":
       return (
         <PixelIcon>
-          <div className="pixelated-border h-9 w-9 bg-rose-600 flex items-center justify-center">
+          <div className="pixelated-border flex h-9 w-9 items-center justify-center bg-rose-600">
             <div className="pixelated-border relative h-6 w-7 bg-amber-100">
               <div className="absolute left-2.5 top-1.5 h-3 w-3 bg-rose-600 [clip-path:polygon(0_0,100%_50%,0_100%)]"></div>
             </div>
@@ -95,11 +95,11 @@ function getRetroIcon(icon: string) {
     case "fork":
       return (
         <PixelIcon>
-          <div className="pixelated-border h-9 w-9 bg-red-600 flex flex-col items-center justify-center">
+          <div className="pixelated-border flex h-9 w-9 flex-col items-center justify-center bg-red-600">
             {/* steam */}
-            <div className="flex gap-1 mb-0.5">
+            <div className="mb-0.5 flex gap-1">
               <div className="h-1.5 w-0.5 bg-red-200"></div>
-              <div className="h-2.5 w-0.5 bg-red-200 -mt-1"></div>
+              <div className="-mt-1 h-2.5 w-0.5 bg-red-200"></div>
               <div className="h-1.5 w-0.5 bg-red-200"></div>
             </div>
             {/* rim */}
@@ -116,9 +116,9 @@ function getRetroIcon(icon: string) {
     case "camera":
       return (
         <PixelIcon>
-          <div className="pixelated-border h-9 w-9 bg-blue-600 flex flex-col items-center justify-center">
+          <div className="pixelated-border flex h-9 w-9 flex-col items-center justify-center bg-blue-600">
             <div className="mb-0.5 h-1 w-3 bg-blue-200"></div>
-            <div className="pixelated-border h-5 w-7 bg-blue-400 flex items-center justify-center">
+            <div className="pixelated-border flex h-5 w-7 items-center justify-center bg-blue-400">
               <div className="h-3 w-3 rounded-full border border-white bg-blue-200"></div>
             </div>
           </div>
@@ -127,11 +127,22 @@ function getRetroIcon(icon: string) {
     case "activity":
       return (
         <PixelIcon>
-          <div className="pixelated-border h-9 w-9 bg-lime-600 flex items-center justify-center">
-            <svg width="30" height="28" viewBox="0 0 30 28" fill="none" stroke="white" strokeWidth="2" aria-hidden="true">
+          <div className="pixelated-border flex h-9 w-9 items-center justify-center bg-lime-600">
+            <svg
+              width="30"
+              height="28"
+              viewBox="0 0 30 28"
+              fill="none"
+              stroke="white"
+              strokeWidth="2"
+              aria-hidden="true"
+            >
               <circle cx="6" cy="20" r="5" />
               <circle cx="24" cy="20" r="5" />
-              <path d="M6 20 11 10 18 20H6ZM11 10H20L24 20M9 7H14M20 10V6H24" strokeLinejoin="round" />
+              <path
+                d="M6 20 11 10 18 20H6ZM11 10H20L24 20M9 7H14M20 10V6H24"
+                strokeLinejoin="round"
+              />
             </svg>
           </div>
         </PixelIcon>
@@ -139,7 +150,7 @@ function getRetroIcon(icon: string) {
     case "tape":
       return (
         <PixelIcon>
-          <div className="pixelated-border h-7 w-10 bg-gray-800 flex flex-col items-center justify-center">
+          <div className="pixelated-border flex h-7 w-10 flex-col items-center justify-center bg-gray-800">
             <div className="mb-0.5 flex gap-2">
               <div className="h-2 w-2 rounded-full border border-gray-400 bg-gray-600"></div>
               <div className="h-2 w-2 rounded-full border border-gray-400 bg-gray-600"></div>
@@ -151,14 +162,14 @@ function getRetroIcon(icon: string) {
     case "sign":
       return (
         <PixelIcon>
-          <div className="pixelated-border h-9 w-9 bg-teal-600 flex items-center justify-center">
+          <div className="pixelated-border flex h-9 w-9 items-center justify-center bg-teal-600">
             <div className="relative h-6 w-6">
               <div className="absolute inset-0 border border-teal-200">
-                <div className="mt-1 mx-1 h-0.5 w-4 bg-teal-200"></div>
-                <div className="mt-1 mx-1 h-0.5 w-3 bg-teal-200"></div>
-                <div className="mt-1 mx-1 h-0.5 w-4 bg-teal-200"></div>
+                <div className="mx-1 mt-1 h-0.5 w-4 bg-teal-200"></div>
+                <div className="mx-1 mt-1 h-0.5 w-3 bg-teal-200"></div>
+                <div className="mx-1 mt-1 h-0.5 w-4 bg-teal-200"></div>
               </div>
-              <div className="absolute bottom-0 right-0 h-2.5 w-0.5 rotate-45 bg-teal-200 origin-bottom"></div>
+              <div className="absolute bottom-0 right-0 h-2.5 w-0.5 origin-bottom rotate-45 bg-teal-200"></div>
             </div>
           </div>
         </PixelIcon>
@@ -166,9 +177,11 @@ function getRetroIcon(icon: string) {
     case "term":
       return (
         <PixelIcon>
-          <div className="pixelated-border h-9 w-9 bg-gray-900 flex flex-col items-start justify-center px-1.5 gap-0.5">
+          <div className="pixelated-border flex h-9 w-9 flex-col items-start justify-center gap-0.5 bg-gray-900 px-1.5">
             <div className="flex items-center gap-0.5">
-              <div className="h-1.5 w-1.5 text-green-400 text-xs leading-none">›</div>
+              <div className="h-1.5 w-1.5 text-xs leading-none text-green-400">
+                ›
+              </div>
               <div className="h-0.5 w-3 bg-green-400"></div>
               <div className="h-3 w-0.5 animate-pulse bg-green-400"></div>
             </div>
@@ -180,9 +193,9 @@ function getRetroIcon(icon: string) {
     case "bomb":
       return (
         <PixelIcon>
-          <div className="pixelated-border h-9 w-9 bg-gray-200 flex items-center justify-center">
+          <div className="pixelated-border flex h-9 w-9 items-center justify-center bg-gray-200">
             <div className="relative">
-              <div className="h-6 w-6 rounded-full bg-gray-800 flex items-center justify-center">
+              <div className="flex h-6 w-6 items-center justify-center rounded-full bg-gray-800">
                 <div className="h-1.5 w-1.5 rounded-full bg-white opacity-60"></div>
               </div>
               <div className="absolute -top-1.5 left-2.5 h-2 w-0.5 -rotate-12 bg-gray-600"></div>
@@ -200,9 +213,15 @@ function getRetroIcon(icon: string) {
   }
 }
 
-export default function DesktopIcon({ id, title, icon, onClick }: DesktopIconProps) {
+export default function DesktopIcon({
+  id,
+  title,
+  icon,
+  onClick,
+}: DesktopIconProps) {
   return (
     <button
+      id={`desktop-${id}`}
       onClick={onClick}
       className="pixelated-button flex w-24 flex-col items-center bg-amber-50 p-2 hover:bg-amber-100"
     >
