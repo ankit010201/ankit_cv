@@ -124,24 +124,15 @@ function getRetroIcon(icon: string) {
           </div>
         </PixelIcon>
       );
-    case "run":
+    case "activity":
       return (
         <PixelIcon>
-          <div className="pixelated-border h-9 w-9 bg-lime-600 flex flex-col items-center justify-end pb-1">
-            {/* sneaker - side profile */}
-            <div className="flex w-7 justify-end">
-              {/* collar (back of shoe, tall) */}
-              <div className="h-4 w-2.5 bg-white"></div>
-            </div>
-            {/* main body */}
-            <div className="h-2 w-7 bg-white -mt-2"></div>
-            {/* toe cap (slightly lower/wider) */}
-            <div className="flex w-7">
-              <div className="h-1 w-2 bg-white" style={{ borderRadius: "0 0 0 3px" }}></div>
-              <div className="h-1 flex-1 bg-white opacity-0"></div>
-            </div>
-            {/* sole */}
-            <div className="h-1.5 w-7 bg-gray-200"></div>
+          <div className="pixelated-border h-9 w-9 bg-lime-600 flex items-center justify-center">
+            <svg width="30" height="28" viewBox="0 0 30 28" fill="none" stroke="white" strokeWidth="2" aria-hidden="true">
+              <circle cx="6" cy="20" r="5" />
+              <circle cx="24" cy="20" r="5" />
+              <path d="M6 20 11 10 18 20H6ZM11 10H20L24 20M9 7H14M20 10V6H24" strokeLinejoin="round" />
+            </svg>
           </div>
         </PixelIcon>
       );

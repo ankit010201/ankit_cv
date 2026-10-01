@@ -10,11 +10,11 @@ const COMMANDS: Record<string, string | (() => string)> = {
   contact    — get in touch
   secret     — ???
   clear      — clear terminal`,
-  whoami: "ankit agrawal. engineer. runner. ramen enjoyer.",
+  whoami: "ankit agrawal. engineer. runner & cyclist. ramen enjoyer.",
   skills: "python · typescript · react · next.js · c# · java · ml · gcp · aws",
   contact: "email: ankit010201@gmail.com\ngithub: github.com/ankit010201",
   secret: "you found it. the answer was 42 all along.",
-  ls: "about.txt  projects/  music/  food/  photos/  running.log",
+  ls: "about.txt  projects/  music/  food/  photos/  activities.log",
   pwd: "/home/ankit",
   date: () => new Date().toString(),
   uname: "PersonalOS v1.0.0 (retro build)",

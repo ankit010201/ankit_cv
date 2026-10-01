@@ -15,7 +15,7 @@ const POOL: Omit<Notif, "id">[] = [
   { emoji: "📱", app: "Messages",    message: "1 unread message from Mom" },
   { emoji: "🔋", app: "Battery",     message: "battery at 69%" },
   { emoji: "🍜", app: "Beli",        message: "new follower on Beli" },
-  { emoji: "🏃", app: "Activity",    message: "run streak: 4 weeks strong!" },
+  { emoji: "🚴", app: "Activity",    message: "take the scenic route" },
   { emoji: "☀️", app: "Weather",     message: "beautiful day in SF · 68°F" },
   { emoji: "🥐", app: "Arsicault",   message: "your croissant order is ready" },
   { emoji: "⛰️", app: "Achievement", message: "Mt. Fuji conquered!" },
